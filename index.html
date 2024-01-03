@@ -1,1 +1,154 @@
-first page
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            width: 250px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 20px auto;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .calculator .button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 18px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .calculator .button:hover {
+            background-color: #e6e6e6;
+        }
+
+        .calculator .button.operator {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .calculator .button.operator:hover {
+            background-color: #45a049;
+        }
+
+        .history {
+            width: 100%;
+            max-height: 100px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="result" readonly>
+        <table>
+            <tr>
+                <td><button class="button" onclick="appendNumber(7)">7</button></td>
+                <td><button class="button" onclick="appendNumber(8)">8</button></td>
+                <td><button class="button" onclick="appendNumber(9)">9</button></td>
+                <td><button class="button operator" onclick="appendOperator('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendNumber(4)">4</button></td>
+                <td><button class="button" onclick="appendNumber(5)">5</button></td>
+                <td><button class="button" onclick="appendNumber(6)">6</button></td>
+                <td><button class="button operator" onclick="appendOperator('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendNumber(1)">1</button></td>
+                <td><button class="button" onclick="appendNumber(2)">2</button></td>
+                <td><button class="button" onclick="appendNumber(3)">3</button></td>
+                <td><button class="button operator" onclick="appendOperator('*')">*</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendNumber(0)">0</button></td>
+                <td><button class="button" onclick="appendDecimal()">.</button></td>
+                <td><button class="button operator" onclick="calculate()">=</button></td>
+                <td><button class="button operator" onclick="appendOperator('/')">/</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendOperator('Math.sqrt(')">√</button></td>
+                <td><button class="button" onclick="appendOperator('Math.pow(')">^</button></td>
+                <td><button class="button" onclick="appendOperator('%')">%</button></td>
+                <td><button class="button operator" onclick="clearInput()">Clear</button></td>
+            </tr>
+        </table>
+        <div class="history" id="history"></div>
+    </div>
+
+    <script>
+        let result = document.getElementById('result');
+        let historyContainer = document.getElementById('history');
+        let history = [];
+
+        function appendNumber(number) {
+            result.value += number;
+        }
+
+        function appendOperator(operator) {
+            result.value += operator;
+        }
+
+        function appendDecimal() {
+            if (!result.value.includes('.')) {
+                result.value += '.';
+            }
+        }
+
+        function calculate() {
+            try {
+                let calculation = result.value + ' = 'Here's the continuation of the code:
+
+```javascript
+                let sanitizedCalculation = result.value.replace(/[^-()\d/*+.]/g, '');
+                let resultValue = eval(sanitizedCalculation);
+                let calculation = result.value + ' = ' + resultValue;
+                result.value = resultValue;
+
+                if (history.length >= 10) {
+                    history.shift();
+                }
+
+                history.push(calculation);
+                updateHistory();
+            } catch (error) {
+                result.value = 'Error';
+            }
+        }
+
+        function clearInput() {
+            result.value = '';
+        }
+
+        function updateHistory() {
+            historyContainer.innerHTML = '';
+            for (let i = 0; i < history.length; i++) {
+                let calculation = document.createElement('div');
+                calculation.textContent = history[i];
+                historyContainer.appendChild(calculation);
+            }
+        }
+    </script>
+</body>
+</html>
